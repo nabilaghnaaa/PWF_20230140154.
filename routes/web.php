@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TodoController; // ✅ TAMBAHAN INI
 use Illuminate\Support\Facades\Route;
 use App\Models\Todo;
 
@@ -32,14 +33,16 @@ Route::get('/about', [AboutController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
-| TODO (NEW - TAMBAHAN KAMU)
+| TODO (UPDATED - SUDAH CRUD + VALIDASI)
 |--------------------------------------------------------------------------
 */
 
-Route::get('/todo', function () {
-    $todos = Todo::with('user')->get();
-    return view('todo', compact('todos'));
-});
+Route::get('/todo', [TodoController::class, 'index'])->name('todo.index');
+Route::get('/todo/create', [TodoController::class, 'create'])->name('todo.create');
+Route::post('/todo/store', [TodoController::class, 'store'])->name('todo.store');
+Route::get('/todo/{id}/edit', [TodoController::class, 'edit'])->name('todo.edit');
+Route::put('/todo/{id}', [TodoController::class, 'update'])->name('todo.update');
+Route::delete('/todo/{id}', [TodoController::class, 'destroy'])->name('todo.destroy');
 
 /*
 |--------------------------------------------------------------------------
