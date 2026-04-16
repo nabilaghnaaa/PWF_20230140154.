@@ -11,20 +11,32 @@
                             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your product inventory</p>
                         </div>
 
-                        <a href="{{ route('product.create') }}"
-                           class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition duration-150 shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 class="h-4 w-4"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke="currentColor">
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M12 4v16m8-8H4"/>
-                            </svg>
-                            Add Product
-                        </a>
+                        <div class="flex items-center gap-2">
+                            
+                            {{-- ✅ TOMBOL EXPORT (DITAMBAH) --}}
+                            @can('export-product')
+                                <a href="{{ route('export') }}"
+                                   class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition duration-150 shadow-sm">
+                                    Export
+                                </a>
+                            @endcan
+
+                            <a href="{{ route('product.create') }}"
+                               class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition duration-150 shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="h-4 w-4"
+                                     fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Add Product
+                            </a>
+
+                        </div>
                     </div>
 
                     {{-- Flash Message --}}
@@ -107,6 +119,8 @@
                                                 </svg>
                                             </a>
 
+                                            {{-- ✅ EDIT (DITAMBAH POLICY) --}}
+                                            @can('update', $product)
                                             <a href="{{ route('product.edit', $product) }}"
                                                class="p-1.5 rounded-md text-gray-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 transition"
                                                title="Edit">
@@ -122,7 +136,10 @@
                                                           d="M11 5h2M12 7v10m-7 0h14"/>
                                                 </svg>
                                             </a>
+                                            @endcan
 
+                                            {{-- ✅ DELETE (DITAMBAH POLICY) --}}
+                                            @can('delete', $product)
                                             <form action="{{ route('product.delete', $product->id) }}"
                                                   method="POST"
                                                   onsubmit="return confirm('Delete this product?')">
@@ -146,6 +163,7 @@
 
                                                 </button>
                                             </form>
+                                            @endcan
 
                                         </div>
                                     </td>

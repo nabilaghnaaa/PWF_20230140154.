@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Todo;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +32,17 @@ Route::get('/about', [AboutController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
+| TODO (NEW - TAMBAHAN KAMU)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/todo', function () {
+    $todos = Todo::with('user')->get();
+    return view('todo', compact('todos'));
+});
+
+/*
+|--------------------------------------------------------------------------
 | Profile
 |--------------------------------------------------------------------------
 */
@@ -54,6 +66,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
     Route::get('/product/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
     Route::delete('/product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+
+    /*
+    |--------------------------------------------------------------------------
+    | EXPORT PRODUCT (TAMBAHAN)
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/export', function () {
+        return "Export berhasil";
+    })->name('export')->middleware('can:export-product');
 
 });
 
