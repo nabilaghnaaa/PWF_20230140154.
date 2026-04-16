@@ -91,7 +91,13 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $this->authorize('update', $product);
+        try {
+            $this->authorize('update', $product);
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            return redirect()
+                ->route('product.index')
+                ->with('error', 'Tidak bisa update, bukan hak akses kamu!');
+        }
 
         $validated = $request->validated();
 
@@ -104,7 +110,13 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $this->authorize('update', $product);
+        try {
+    $this->authorize('update', $product);
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            return redirect()
+                ->route('product.index')
+                ->with('error', 'Kamu tidak punya akses untuk edit produk ini!');
+        }
 
         $users = User::orderBy('name')->get();
 
@@ -115,7 +127,13 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $this->authorize('delete', $product);
+        try {
+            $this->authorize('delete', $product);
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            return redirect()
+                ->route('product.index')
+                ->with('error', 'Tidak bisa hapus produk ini!');
+        }
 
         $product->delete();
 

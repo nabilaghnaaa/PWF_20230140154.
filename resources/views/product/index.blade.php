@@ -52,6 +52,15 @@
                 </div>
             @endif
 
+            @if(session('error'))
+                <div class="animate-fade-in-down mb-8 flex items-center p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 backdrop-blur-md text-rose-400 shadow-[0_0_30px_-10px_rgba(244,63,94,0.2)]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M4.93 19h14.14c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.2 16c-.77 1.33.19 3 1.73 3z" />
+                    </svg>
+                    <span class="font-medium">{{ session('error') }}</span>
+                </div>
+            @endif
+
             {{-- MAIN CONTENT CARD --}}
             <div class="bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] rounded-3xl p-1 shadow-2xl shadow-black/50">
                 <div class="overflow-x-auto rounded-[22px]">
