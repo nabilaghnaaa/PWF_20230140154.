@@ -10,7 +10,6 @@
                 <h1 class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 tracking-tighter">
                     Todo Hub
                 </h1>
-                <p class="text-slate-400 mt-2 font-medium">Satu tempat untuk semua progres kerjamu.</p>
             </div>
 
             {{-- FORM INPUT --}}
@@ -37,35 +36,39 @@
                 <div class="max-h-[500px] overflow-y-auto custom-scrollbar">
                     <div class="divide-y divide-white/[0.03]">
                         @forelse($todos as $todo)
-                            <div class="todo-item group flex items-start justify-between px-8 py-6 hover:bg-white/[0.04] transition-all" data-status="{{ $todo->is_completed ? 'completed' : 'pending' }}">
-                                <div class="flex items-start gap-5 w-full">
-                                    {{-- NUMBERING --}}
-                                    <div class="text-slate-600 font-black text-sm font-mono mt-1">
-                                        {{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}
-                                    </div>
-                                    
-                                    {{-- CONTENT & DESCRIPTION --}}
-                                    <div class="flex flex-col flex-1 min-w-0 mr-6">
-                                        <h3 class="text-white font-bold group-hover:text-indigo-400 transition-colors truncate">
-                                            {{ $todo->title }}
-                                        </h3>
-                                        <p class="text-slate-500 text-xs mt-1.5 leading-relaxed">
-                                            {{ $todo->description }}
-                                        </p>
+                            <div class="todo-item group flex items-center justify-between px-8 py-6 hover:bg-white/[0.04] transition-all" data-status="{{ $todo->is_completed ? 'completed' : 'pending' }}">
+                                <div class="flex items-center gap-5 w-full">
+                                    {{-- CHECKBOX (Ikon minimalis) --}}
+                                    <form action="{{ route('todo.toggle', $todo->id) }}" method="POST">
+                                @csrf @method('PATCH')
+                                <button type="submit" class="w-6 h-6 rounded-lg border flex items-center justify-center transition-all
+                                    {{ $todo->is_completed ? 'bg-emerald-500 border-emerald-500' : 'border-slate-600 hover:border-indigo-400' }}">
+                                    @if($todo->is_completed) 
+                                        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-width="3" d="M5 13l4 4L19 7"/>
+                                        </svg> 
+                                    @endif
+                                </button>
+                            </form>
+
+                                    {{-- CONTENT --}}
+                                    <div class="flex flex-col flex-1 min-w-0">
+                                        <h3 class="text-white font-bold {{ $todo->is_completed ? 'line-through text-slate-500' : '' }}">{{ $todo->title }}</h3>
+                                        <p class="text-slate-500 text-xs mt-0.5">{{ $todo->description }}</p>
                                     </div>
                                 </div>
                                 
-                                {{-- STATUS & DELETE --}}
-                                <div class="flex items-center gap-6 mt-1 flex-shrink-0">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-2 h-2 rounded-full {{ $todo->is_completed ? 'bg-emerald-500' : 'bg-amber-500' }}"></div>
-                                        <span class="text-[10px] uppercase tracking-widest font-bold {{ $todo->is_completed ? 'text-emerald-500' : 'text-amber-500' }}">
-                                            {{ $todo->is_completed ? 'Done' : 'Pending' }}
-                                        </span>
-                                    </div>
+                                {{-- STATUS BADGE (Kotak Minimalis) --}}
+                                <div class="flex items-center gap-4 ml-6 flex-shrink-0">
+                                    <span class="px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-wider border {{ $todo->is_completed ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 'bg-amber-500/10 text-amber-500 border-amber-500/20' }}">
+                                        {{ $todo->is_completed ? 'Done' : 'Pending' }}
+                                    </span>
+
                                     <form action="/todo/{{ $todo->id }}" method="POST" onsubmit="return confirm('Hapus tugas ini?')">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="opacity-0 group-hover:opacity-100 transition-opacity text-lg hover:scale-110">🗑️</button>
+                                        <button type="submit" class="text-slate-600 hover:text-red-500 transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-6 4h8"></path></svg>
+                                        </button>
                                     </form>
                                 </div>
                             </div>

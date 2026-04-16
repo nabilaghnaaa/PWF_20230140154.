@@ -27,7 +27,11 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'qty' => 'required|integer',
             'price' => 'required|numeric',
+            'user_id' => 'required|exists:users,id',
         ], [
+            'user_id.required' => 'Pemilik (owner wajib dipilih.',
+            'user_id.exists' => 'User yang dipilih tidak valid.',
+
             'name.required' => 'Nama produk wajib diisi.',
             'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
 
@@ -37,8 +41,6 @@ class ProductController extends Controller
             'price.required' => 'Harga produk wajib diisi.',
             'price.numeric' => 'Harga produk harus berupa angka yang valid (boleh desimal).',
         ]);
-
-        $validated['user_id'] = Auth::id();
 
         try {
             Product::create($validated);

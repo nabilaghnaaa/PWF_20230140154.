@@ -43,6 +43,7 @@ Route::post('/todo/store', [TodoController::class, 'store'])->name('todo.store')
 Route::get('/todo/{id}/edit', [TodoController::class, 'edit'])->name('todo.edit');
 Route::put('/todo/{id}', [TodoController::class, 'update'])->name('todo.update');
 Route::delete('/todo/{id}', [TodoController::class, 'destroy'])->name('todo.destroy');
+Route::patch('/todo/{todo}/toggle', [TodoController::class, 'toggle'])->name('todo.toggle');
 
 /*
 |--------------------------------------------------------------------------
@@ -77,8 +78,19 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::get('/export', function () {
-        return "Export berhasil";
-    })->name('export')->middleware('can:export-product');
+    $products = \App\Models\Product::with('user')->get();
+
+    $csv = "Name,Qty,Price,Owner\n";
+
+    foreach ($products as $p) {
+        $owner = $p->user->name ?? 'Unknown';
+        $csv .= "{$p->name},{$p->qty},{$p->price},{$owner}\n";
+    }
+
+    return response($csv)
+        ->header('Content-Type', 'text/csv')
+        ->header('Content-Disposition', 'attachment; filename=products.csv');
+})->name('export')->middleware('can:export-product');
 
 });
 

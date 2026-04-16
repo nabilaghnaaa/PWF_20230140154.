@@ -64,4 +64,14 @@ class TodoController extends Controller
 
         return redirect('/todo')->with('success', 'Todo berhasil dihapus');
     }
+
+    public function toggle(Todo $todo)
+{
+    // Mengubah status boolean
+    $todo->update([
+        'is_completed' => !$todo->is_completed
+    ]);
+
+    return back(); // Kembali ke halaman semula
+}
 }

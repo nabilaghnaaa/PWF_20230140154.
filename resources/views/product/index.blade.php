@@ -8,22 +8,39 @@
             
             {{-- PAGE HEADER --}}
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
-                <div>
-                    <h1 class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 drop-shadow-sm tracking-tight">
-                        Product Dashboard
-                    </h1>
-                    <p class="text-slate-400 mt-3 text-lg font-medium">
-                        Kelola data inventaris, harga, dan operasional toko anda dengan mudah.
-                    </p>
-                </div>
+    
+    <div>
+        <h1 class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 drop-shadow-sm tracking-tight">
+            Product Dashboard
+        </h1>
+        <p class="text-slate-400 mt-3 text-lg font-medium">
+            Kelola data inventaris, harga, dan operasional toko anda dengan mudah.
+        </p>
+    </div>
+
+    {{-- INI BAGIAN TOMBOL (KANAN) --}}
+            <div class="flex gap-3 md:ml-auto">
+                
                 <a href="{{ route('product.create') }}"
-                   class="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold transition-all duration-300 shadow-[0_0_30px_-5px_rgba(79,70,229,0.4)] hover:shadow-[0_0_40px_-5px_rgba(79,70,229,0.6)] hover:-translate-y-1">
+                class="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold transition-all duration-300 shadow-[0_0_30px_-5px_rgba(79,70,229,0.4)] hover:shadow-[0_0_40px_-5px_rgba(79,70,229,0.6)] hover:-translate-y-1">
                     <span>Add New Product</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:rotate-90 group-hover:scale-110 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                     </svg>
                 </a>
+
+                @can('export-product')
+                <a href="{{ route('export') }}"
+                class="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-bold transition-all duration-300 shadow-[0_0_30px_-5px_rgba(34,197,94,0.4)] hover:shadow-[0_0_40px_-5px_rgba(34,197,94,0.6)] hover:-translate-y-1">
+                    <span>Export Product</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:scale-110 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/>
+                    </svg>
+                </a>
+                @endcan
+
             </div>
+        </div>
 
             {{-- SUCCESS ALERT --}}
             @if(session('success'))
@@ -132,7 +149,7 @@
                                         </svg>
                                     </div>
                                     <h3 class="text-xl font-bold text-slate-300 mb-2">Belum ada produk</h3>
-                                    <p class="text-slate-500 max-w-sm mx-auto">Klik tombol "Add New Product" di atas untuk mulai menambahkan inventaris ke toko anda.</p>
+                                    <p class="text-slate-500 max-w-sm mx-auto">Klik tombol "Add New Product" di atas <br> untuk mulai menambahkan inventaris ke toko anda.</p>
                                 </td>
                             </tr>
                             @endforelse
