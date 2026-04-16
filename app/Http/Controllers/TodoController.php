@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Todo;
+use Illuminate\Support\Facades\Auth; 
 
 class TodoController extends Controller
 {
@@ -11,7 +12,7 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::all();
-        return view('todo', compact('todos')); // ✅ FIX DI SINI
+        return view('todo', compact('todos'));
     }
 
     // 🔹 HALAMAN CREATE
@@ -31,6 +32,7 @@ class TodoController extends Controller
         Todo::create([
             'title' => $request->title,
             'description' => $request->description,
+            'user_id' => Auth::id(), 
         ]);
 
         return redirect('/todo')->with('success', 'Todo berhasil ditambahkan');
@@ -49,6 +51,7 @@ class TodoController extends Controller
         $todo->update([
             'title' => $request->title,
             'description' => $request->description,
+            // 'user_id' => Auth::id(), // Opsional: update user_id jika perlu
         ]);
 
         return redirect('/todo')->with('success', 'Todo berhasil diupdate');

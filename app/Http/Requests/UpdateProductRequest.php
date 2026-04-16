@@ -23,7 +23,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string|max:255',
-            'quantity' => 'sometimes|integer',
+            'qty' => 'sometimes|integer',
             'price' => 'sometimes|numeric',
             'user_id' => 'sometimes|exists:users,id',
         ];
@@ -38,7 +38,7 @@ class UpdateProductRequest extends FormRequest
             'name.string' => 'Nama produk harus berupa teks.',
             'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
 
-            'quantity.integer' => 'Jumlah produk harus berupa angka bulat (tidak boleh desimal).',
+            'qty.integer' => 'Jumlah produk harus berupa angka bulat (tidak boleh desimal).',
 
             'price.numeric' => 'Harga produk harus berupa angka yang valid.',
 

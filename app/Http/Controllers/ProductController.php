@@ -25,14 +25,14 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'quantity' => 'required|integer',
+            'qty' => 'required|integer',
             'price' => 'required|numeric',
         ], [
             'name.required' => 'Nama produk wajib diisi.',
             'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
 
-            'quantity.required' => 'Jumlah (kuantitas) produk wajib diisi.',
-            'quantity.integer' => 'Jumlah (kuantitas) produk harus berupa angka bulat (tidak boleh desimal).',
+            'qty.required' => 'Jumlah (kuantitas) produk wajib diisi.',
+            'qty.integer' => 'Jumlah (kuantitas) produk harus berupa angka bulat (tidak boleh desimal).',
 
             'price.required' => 'Harga produk wajib diisi.',
             'price.numeric' => 'Harga produk harus berupa angka yang valid (boleh desimal).',

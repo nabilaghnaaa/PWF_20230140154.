@@ -36,13 +36,23 @@ class ProductPolicy
      * Determine whether the user can update the model.
      */
     public function update(User $user, Product $product)
-    {
-        return $user->role === 'admin' && $user->id === $product->user_id;
+{
+    // Admin bisa edit apa saja. 
+    // Jika user biasa, mereka hanya bisa edit jika mereka pemiliknya.
+    if ($user->role === 'admin') {
+        return true; 
     }
+    
+    return $user->id === $product->user_id;
+}
 
     public function delete(User $user, Product $product)
     {
-        return $user->role === 'admin' && $user->id === $product->user_id;
+        if ($user->role === 'admin') {
+            return true;
+        }
+        
+        return $user->id === $product->user_id;
     }
 
     /**

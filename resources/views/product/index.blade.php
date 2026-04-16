@@ -62,13 +62,13 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-6">
-                                    @if($product->quantity > 10)
+                                    @if($product->qty > 10)
                                         <div class="inline-flex items-center gap-2 text-emerald-400 font-bold text-xs bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20 shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)]">
                                             <span class="relative flex h-2 w-2">
                                               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                               <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                                             </span>
-                                            IN STOCK ({{ $product->quantity }})
+                                            IN STOCK ({{ $product->qty }})
                                         </div>
                                     @else
                                         <div class="inline-flex items-center gap-2 text-rose-400 font-bold text-xs bg-rose-500/10 px-3 py-1.5 rounded-full border border-rose-500/20 shadow-[0_0_15px_-5px_rgba(244,63,94,0.3)]">
@@ -76,7 +76,7 @@
                                               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
                                               <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
                                             </span>
-                                            LOW STOCK ({{ $product->quantity }})
+                                            LOW STOCK ({{ $product->qty }})
                                         </div>
                                     @endif
                                 </td>
