@@ -3,15 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Category;
 
 class Product extends Model
 {
-    // 1. Daftarkan kolom yang boleh diisi secara massal
-    protected $fillable = ['name', 'qty', 'price', 'user_id'];
+    protected $fillable = ['name', 'qty', 'price', 'user_id', 'category_id'];
 
-    // 2. Buat relasi ke model User
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // RELASI KE CATEGORY
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

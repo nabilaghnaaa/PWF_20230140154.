@@ -6,11 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-   public function up(): void
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
 {
     Schema::create('products', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        // RELASI KE CATEGORIES Setiap product punya category, Jika category dihapus → product ikut terhapus (cascade)
+        $table->foreignId('category_id')->constrained()->onDelete('cascade'); 
         $table->string('name');
         $table->integer('qty');
         $table->decimal('price',10,2);

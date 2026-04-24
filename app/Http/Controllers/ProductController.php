@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::paginate(5);
+        // Product + relasi category (biar bisa tampil nama category)
+        $products = Product::with('category')->paginate(5);
 
         return view('product.index', compact('products'));
     }
@@ -28,18 +30,12 @@ class ProductController extends Controller
             'qty' => 'required|integer',
             'price' => 'required|numeric',
             'user_id' => 'required|exists:users,id',
+            // CATEGORY VALIDATION
+            'category_id' => 'required|exists:categories,id',
         ], [
-            'user_id.required' => 'Pemilik (owner wajib dipilih.',
-            'user_id.exists' => 'User yang dipilih tidak valid.',
-
-            'name.required' => 'Nama produk wajib diisi.',
-            'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
-
-            'qty.required' => 'Jumlah (kuantitas) produk wajib diisi.',
-            'qty.integer' => 'Jumlah (kuantitas) produk harus berupa angka bulat (tidak boleh desimal).',
-
-            'price.required' => 'Harga produk wajib diisi.',
-            'price.numeric' => 'Harga produk harus berupa angka yang valid (boleh desimal).',
+            // CATEGORY VALIDATION MESSAGE
+            'category_id.required' => 'Category wajib dipilih.',
+            'category_id.exists' => 'Category tidak valid.',
         ]);
 
         try {
@@ -75,14 +71,18 @@ class ProductController extends Controller
 
     public function create()
     {
+        // Ambil semua category untuk dropdown select di form create product
+        $categories = Category::orderBy('name')->get();
+
         $users = User::orderBy('name')->get();
 
-        return view('product.create', compact('users'));
+        return view('product.create', compact('users', 'categories'));
     }
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        // Load category agar bisa ditampilkan di detail product
+        $product = Product::with('category')->findOrFail($id);
 
         return view('product.view', compact('product'));
     }
@@ -91,16 +91,9 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        try {
-            $this->authorize('update', $product);
-        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
-            return redirect()
-                ->route('product.index')
-                ->with('error', 'Tidak bisa update, bukan hak akses kamu!');
-        }
-
         $validated = $request->validated();
 
+        // (category_id ikut ter-update kalau ada di request)
         $product->update($validated);
 
         return redirect()
@@ -110,33 +103,21 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        try {
-    $this->authorize('update', $product);
-        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
-            return redirect()
-                ->route('product.index')
-                ->with('error', 'Kamu tidak punya akses untuk edit produk ini!');
-        }
+        //Ambil category untuk dropdown edit product
+        $categories = Category::orderBy('name')->get();
 
         $users = User::orderBy('name')->get();
 
-        return view('product.edit', compact('product', 'users'));
+        return view('product.edit', compact('product', 'users', 'categories'));
     }
 
     public function delete($id)
     {
         $product = Product::findOrFail($id);
 
-        try {
-            $this->authorize('delete', $product);
-        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
-            return redirect()
-                ->route('product.index')
-                ->with('error', 'Tidak bisa hapus produk ini!');
-        }
-
         $product->delete();
 
-        return redirect()->route('product.index')->with('success', 'Product berhasil dihapus');
+        return redirect()->route('product.index')
+            ->with('success', 'Product berhasil dihapus');
     }
 }
