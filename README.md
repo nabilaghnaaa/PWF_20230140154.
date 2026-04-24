@@ -40,4 +40,17 @@ TUGAS PERTEMUAN 5
 <img width="1918" height="908" alt="erroredit" src="https://github.com/user-attachments/assets/cf5dd475-bd55-42ea-a68b-166d471cccb2" />
 <img width="1917" height="902" alt="todo" src="https://github.com/user-attachments/assets/c178b55b-0462-4a9a-bed9-4d004387a652" />
 
+TUGAS PERTEMUAN 6
+<img width="1917" height="902" alt="todo" src="https://github.com/user-attachments/assets/324fdbba-5391-4545-a1d1-e4a279423a1e" />
+<img width="1918" height="908" alt="erroredit" src="https://github.com/user-attachments/assets/31371d74-d5e7-4609-a65f-f6af64373d83" />
+<img width="1919" height="914" alt="erroradd" src="https://github.com/user-attachments/assets/972e2c12-38b4-479d-8ec3-6beef89bd854" />
+<img width="1918" height="908" alt="editproduct" src="https://github.com/user-attachments/assets/b13bb7e1-17ac-4c2d-a72a-c8d7f56d5293" />
+<img width="1918" height="903" alt="deletesukses" src="https://github.com/user-attachments/assets/cba7a919-0647-419c-a925-ae06c6f05038" />
+<img width="1919" height="1019" alt="dbproduk" src="https://github.com/user-attachments/assets/92f5e93c-9ab0-4834-90ae-9654fe31728a" />
+<img width="1918" height="917" alt="addsukses" src="https://github.com/user-attachments/assets/13d5ce46-5e12-483b-b3ad-49e5ad50c060" />
+<img width="1919" height="915" alt="addproduct" src="https://github.com/user-attachments/assets/8d10087d-4e46-495e-960d-a9295b4d2d84" />
+
+TUGAS PERTEMUAN 7
+UCP
+
 
