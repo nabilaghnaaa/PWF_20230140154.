@@ -53,6 +53,13 @@ TUGAS PERTEMUAN 6
 TUGAS PERTEMUAN 7
 <img width="1917" height="917" alt="membuatcomponenteditdandelete" src="https://github.com/user-attachments/assets/c4104123-2737-4b1a-97dd-5245e24c5d8f" />
 
-UCP
+UCP 1
+<img width="1919" height="920" alt="user" src="https://github.com/user-attachments/assets/05740787-0ab0-4ce5-ba59-54419fd3774f" />
+<img width="1917" height="917" alt="productdetail" src="https://github.com/user-attachments/assets/5eff8536-6b39-4461-903d-14b560f85bfa" />
+<img width="1919" height="918" alt="datacategory" src="https://github.com/user-attachments/assets/dea6e0ea-f404-4d5c-883d-6b007bd32c57" />
+<img width="1919" height="911" alt="createcategory" src="https://github.com/user-attachments/assets/90fafe59-b398-4199-bf8f-8c34cd756f27" />
+<img width="1918" height="913" alt="admin" src="https://github.com/user-attachments/assets/e3d3d0a9-13d1-4b86-9168-4d100aca150a" />
+<img width="1919" height="915" alt="addproduct" src="https://github.com/user-attachments/assets/f76b155f-0860-460f-946d-fabc2dcb7536" />
+
 
 
