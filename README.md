@@ -51,6 +51,8 @@ TUGAS PERTEMUAN 6
 <img width="1919" height="915" alt="addproduct" src="https://github.com/user-attachments/assets/8d10087d-4e46-495e-960d-a9295b4d2d84" />
 
 TUGAS PERTEMUAN 7
+<img width="1917" height="917" alt="membuatcomponenteditdandelete" src="https://github.com/user-attachments/assets/c4104123-2737-4b1a-97dd-5245e24c5d8f" />
+
 UCP
 
 
