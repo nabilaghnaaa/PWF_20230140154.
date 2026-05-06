@@ -38,6 +38,10 @@ class CategoryController extends Controller
 
             $category = Category::create($validated);
 
+            Log::info('Menambah data category', [
+                'data' => $category,
+            ]);
+
             return response()->json([
                 'message' => 'Category berhasil ditambahkan',
                 'data' => $category,
@@ -49,6 +53,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -65,11 +70,11 @@ class CategoryController extends Controller
             }
 
             return response()->json([
-                'message' => 'Detail category berhasil diambil',
+                'message' => 'Category berhasil diambil',
                 'data' => $category,
             ], 200);
         } catch (\Throwable $e) {
-            Log::error('Gagal mengambil detail category', [
+            Log::error('Gagal mengambil data category', [
                 'message' => $e->getMessage(),
             ]);
 
@@ -96,6 +101,10 @@ class CategoryController extends Controller
 
             $category->update($validated);
 
+            Log::info('Mengubah data category', [
+                'data' => $category,
+            ]);
+
             return response()->json([
                 'message' => 'Category berhasil diubah',
                 'data' => $category,
@@ -107,6 +116,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -124,7 +134,13 @@ class CategoryController extends Controller
 
             $category->delete();
 
-            return response()->json(null, 204);
+            Log::info('Menghapus data category', [
+                'id' => $id,
+            ]);
+
+            return response()->json([
+                'message' => 'Category berhasil dihapus',
+            ], 200);
         } catch (\Throwable $e) {
             Log::error('Gagal menghapus category', [
                 'message' => $e->getMessage(),
@@ -132,6 +148,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

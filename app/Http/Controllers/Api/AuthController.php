@@ -19,6 +19,8 @@ class AuthController extends Controller
             ]);
 
             if (!Auth::attempt($data)) {
+                Log::info('[Auth - API] Email atau password salah');
+
                 return response()->json([
                     'message' => 'Email atau password salah',
                 ], 401);
@@ -27,6 +29,10 @@ class AuthController extends Controller
             $user = User::where('email', $request->email)->first();
 
             $token = $user->createToken('api_token')->plainTextToken;
+
+            Log::info('Token API berhasil dibuat', [
+                'user_id' => $user->id,
+            ]);
 
             return response()->json([
                 'message' => 'Login berhasil',
@@ -40,6 +46,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

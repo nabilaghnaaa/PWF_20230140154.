@@ -1,36 +1,67 @@
-<?php // Deklarasi blok PHP untuk kode server-side
+<?php
 
-namespace App\Providers; // Menentukan namespace untuk class ini
+namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate; // Import Gate facade untuk authorization
-use Illuminate\Support\Facades\Auth; // Import Auth facade untuk autentikasi
-use Illuminate\Support\ServiceProvider; // Import class ServiceProvider dari Laravel
+use Dedoc\Scramble\Scramble;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
-class AppServiceProvider extends ServiceProvider // Deklarasi class AppServiceProvider yang extends ServiceProvider
-{ // Buka blok class
+class AppServiceProvider extends ServiceProvider
+{
     /**
      * Register any application services.
      */
-    public function register(): void // Fungsi untuk register service ke container (return void)
-    { // Buka blok fungsi
-        // // Tidak ada service yang di-register
-    } // Tutup blok fungsi
+    public function register(): void
+    {
+        //
+    }
 
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void // Fungsi untuk bootstrap service (dijalankan setelah semua service di-register, return void)
-    { // Buka blok fungsi
-        // GATE: Export Product
-        // Hanya admin yang boleh export data product
-        Gate::define('export-product', function ($user) { // Definisi gate 'export-product' - mengecek apakah user boleh export product
-            return $user->role === 'admin'; // Return true jika user memiliki role admin
-        }); // Tutup define gate
+    public function boot(): void
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Scramble API Documentation
+        |--------------------------------------------------------------------------
+        | Konfigurasi agar Scramble hanya membaca route dengan prefix api/.
+        */
+        Scramble::configure()
+            ->routes(function (Route $route) {
+                return Str::startsWith($route->uri, 'api/');
+            });
 
-        // GATE: Manage Products
-        // Membatasi akses CRUD product hanya untuk admin
-        Gate::define('manage-products', function ($user) { // Definisi gate 'manage-products' - mengecek apakah user boleh manage product (CRUD)
-            return $user->role === 'admin'; // Return true jika user memiliki role admin
-        }); // Tutup define gate
-    } // Tutup blok fungsi
-} // Tutup blok class
+        /*
+        |--------------------------------------------------------------------------
+        | Gate: View API Docs
+        |--------------------------------------------------------------------------
+        | Agar dokumentasi API bisa dilihat saat production.
+        */
+        Gate::define('viewApiDocs', function () {
+            return true;
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Gate: Export Product
+        |--------------------------------------------------------------------------
+        | Hanya admin yang boleh export data product.
+        */
+        Gate::define('export-product', function ($user) {
+            return $user->role === 'admin';
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Gate: Manage Products
+        |--------------------------------------------------------------------------
+        | Membatasi akses CRUD product hanya untuk admin.
+        */
+        Gate::define('manage-products', function ($user) {
+            return $user->role === 'admin';
+        });
+    }
+}

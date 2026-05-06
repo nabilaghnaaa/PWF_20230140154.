@@ -26,7 +26,6 @@ class ProductController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -36,20 +35,16 @@ class ProductController extends Controller
         try {
             $validated = $request->validated();
 
-            $product = Product::create([
-                'user_id' => Auth::id(),
-                'category_id' => $validated['category_id'],
-                'name' => $validated['name'],
-                'qty' => $validated['qty'],
-                'price' => $validated['price'],
-            ]);
+            $validated['user_id'] = Auth::id();
+
+            $product = Product::create($validated);
 
             Log::info('Menambah data produk', [
-                'product' => $product,
+                'list' => $product,
             ]);
 
             return response()->json([
-                'message' => 'Produk berhasil ditambahkan',
+                'message' => 'Produk berhasil ditambahkan!!',
                 'data' => $product,
             ], 201);
         } catch (\Throwable $e) {
@@ -76,11 +71,11 @@ class ProductController extends Controller
             }
 
             return response()->json([
-                'message' => 'Product berhasil diambil',
+                'message' => 'Product retrieved successfully',
                 'data' => $product,
             ], 200);
         } catch (\Throwable $e) {
-            Log::error('Gagal mengambil detail product', [
+            Log::error('Gagal mengambil data produk', [
                 'message' => $e->getMessage(),
             ]);
 
@@ -104,19 +99,14 @@ class ProductController extends Controller
 
             $validated = $request->validated();
 
-            $product->update([
-                'category_id' => $validated['category_id'],
-                'name' => $validated['name'],
-                'qty' => $validated['qty'],
-                'price' => $validated['price'],
-            ]);
+            $product->update($validated);
 
             Log::info('Mengubah data produk', [
-                'product' => $product,
+                'list' => $product,
             ]);
 
             return response()->json([
-                'message' => 'Produk berhasil diubah',
+                'message' => 'Produk berhasil diubah!!',
                 'data' => $product,
             ], 200);
         } catch (\Throwable $e) {
@@ -145,10 +135,12 @@ class ProductController extends Controller
             $product->delete();
 
             Log::info('Menghapus data produk', [
-                'product_id' => $id,
+                'id' => $id,
             ]);
 
-            return response()->json(null, 204);
+            return response()->json([
+                'message' => 'Produk berhasil dihapus',
+            ], 200);
         } catch (\Throwable $e) {
             Log::error('Error saat menghapus product', [
                 'message' => $e->getMessage(),
