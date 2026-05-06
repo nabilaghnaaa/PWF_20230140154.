@@ -19,14 +19,17 @@ class StoreProductRequest extends FormRequest // Deklarasi class StoreProductReq
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array // Fungsi untuk mendapatkan aturan validasi yang apply ke request ini (return array)
-    { // Buka blok fungsi
-        return [ // Return array berisi aturan validasi
-            'name' => 'required|string|max:255', // Field name: harus diisi, tipe string, max 255 karakter
-            'quantity' => 'required|integer', // Field quantity: harus diisi, tipe integer
-            'price' => 'required|numeric', // Field price: harus diisi, tipe numeric (bisa desimal)
-        ]; // Tutup array
-    } // Tutup blok fungsi
+    public function rules(): array
+    {
+        return [
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'price' => 'required|integer|min:0',
+            'stock' => 'nullable|integer|min:0',
+            'description' => 'nullable|string',
+        ];
+    }
+}
 
     public function messages(): array // Fungsi untuk mendapatkan pesan validasi custom (return array)
     { // Buka blok fungsi
