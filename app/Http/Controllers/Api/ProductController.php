@@ -26,6 +26,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -35,9 +36,17 @@ class ProductController extends Controller
         try {
             $validated = $request->validated();
 
-            $validated['user_id'] = Auth::id();
+            $product = Product::create([
+                'user_id' => Auth::id(),
+                'category_id' => $validated['category_id'],
+                'name' => $validated['name'],
+                'qty' => $validated['qty'],
+                'price' => $validated['price'],
+            ]);
 
-            $product = Product::create($validated);
+            Log::info('Menambah data produk', [
+                'product' => $product,
+            ]);
 
             return response()->json([
                 'message' => 'Produk berhasil ditambahkan',
@@ -50,6 +59,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -76,6 +86,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -93,7 +104,16 @@ class ProductController extends Controller
 
             $validated = $request->validated();
 
-            $product->update($validated);
+            $product->update([
+                'category_id' => $validated['category_id'],
+                'name' => $validated['name'],
+                'qty' => $validated['qty'],
+                'price' => $validated['price'],
+            ]);
+
+            Log::info('Mengubah data produk', [
+                'product' => $product,
+            ]);
 
             return response()->json([
                 'message' => 'Produk berhasil diubah',
@@ -106,6 +126,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -123,6 +144,10 @@ class ProductController extends Controller
 
             $product->delete();
 
+            Log::info('Menghapus data produk', [
+                'product_id' => $id,
+            ]);
+
             return response()->json(null, 204);
         } catch (\Throwable $e) {
             Log::error('Error saat menghapus product', [
@@ -131,6 +156,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'message' => 'Terjadi kesalahan server',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

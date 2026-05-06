@@ -1,10 +1,8 @@
-<?php // Deklarasi blok PHP untuk kode server-side
+<?php
 
-namespace App\Models; // Menentukan namespace untuk class ini
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model; // Import class Model dari Laravel Eloquent
-use App\Models\User; // Import model User
-use App\Models\Category; // Import model Category
+use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
@@ -12,9 +10,8 @@ class Product extends Model
         'user_id',
         'category_id',
         'name',
+        'qty',
         'price',
-        'stock',
-        'description',
     ];
 
     public function category()
